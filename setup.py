@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="Lagring",
-    version="0.1.3",
+    version="0.1.5",
     author="Lenar Imamutdinov",
     author_email="lenar.imamutdinov@gmail.com",
     packages=find_packages(),
@@ -13,6 +13,7 @@ setup(
     long_description=open("README.txt").read(),
     install_requires=[
         "flask",
+        "sqlalchemy"
     ],
     extras_require = {
         'Pillow': []
