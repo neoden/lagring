@@ -2,10 +2,10 @@ import os
 
 from werkzeug.datastructures import FileStorage
 
-from common import classproperty, INSTANCE_ROOT
-
 from .core import LagringCore, _AssetSource
 from .entity import Entity
+from .classproperty import classproperty
+from .exception import StorageException
 
 
 class _AssetSourceEx(_AssetSource):
@@ -37,7 +37,7 @@ class FlaskLagring(LagringCore):
     def init_app(self, app):
         root = app.config['ASSET_STORAGE_ROOT']
         if root[:1] != '/':
-            root = os.path.join(INSTANCE_ROOT, root)
+            raise StorageException('ASSET_STORAGE_ROOT path must be absolute')
         self.setup(
             root=root,
             url_base=app.config['ASSET_URL_ROOT'],
@@ -75,4 +75,3 @@ class FlaskLagring(LagringCore):
             )
             data = src_entity.get_asset_data(name)
             dest_entity.put_asset_data(name, data)
-

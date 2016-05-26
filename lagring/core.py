@@ -5,8 +5,7 @@ import io
 import shutil
 import uuid
 
-from common import classproperty
-
+from .classproperty import classproperty
 from .exception import StorageException
 from .logger import log
 

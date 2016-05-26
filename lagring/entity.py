@@ -3,8 +3,7 @@ from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm.attributes import flag_modified
 from sqlalchemy import Column
 
-from common import classproperty
-
+from .classproperty import classproperty
 from .exception import StorageException
 from .asset import Asset
 
