@@ -1,0 +1,8 @@
+psycopg2
+SQLAlchemy
+Flask
+Flask-SQLAlchemy
+pytest
+Pillow
+
+-e .
