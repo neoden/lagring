@@ -1,7 +1,9 @@
 import os
+import pytest
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+
 
 INSTANCE_ROOT = ''
 
@@ -182,3 +184,63 @@ def test_clone_assets():
     storage.clone_assets(a, b)
     assert(os.path.isfile(a.image.abs_path))
     assert(os.path.isfile(b.image.abs_path))
+
+
+def test_directory_asset_def():
+    from lagring.assets.directory import DirectoryAsset
+
+    class E(db.Model, storage.Entity):
+        __tablename__ = 'test3'
+
+        id = db.Column(db.Integer(), primary_key=True)
+
+        directory = DirectoryAsset()
+
+    global model
+    model = E
+
+
+def test_directory_asset():
+    with app.app_context():
+        a = model(id=1)
+        assert(not a.directory)
+        assert(not a.directory.abs_path)
+
+        global instance
+        instance = a
+
+
+def test_directory_asset_write_directory():
+    with app.app_context():
+        instance.directory = os.path.join(DIR_PATH, 'directory_asset')
+        assert(os.path.isdir(instance.directory.abs_path))
+        assert(os.path.isfile(os.path.join(instance.directory.abs_path, 'image.jpg')))
+
+
+def test_directory_asset_write_zip():
+    with app.app_context():
+        b = model(id=2)
+        b.directory = os.path.join(DIR_PATH, 'image.jpg.zip')
+        assert(os.path.isdir(instance.directory.abs_path))
+        assert(os.path.isfile(os.path.join(instance.directory.abs_path, 'image.jpg')))
+
+
+def test_directory_asset_write_invalid_zip():
+    from lagring import StorageException
+
+    with pytest.raises(StorageException) as excinfo:
+        with app.app_context():
+            c = model(id=3)
+            c.directory = os.path.join(DIR_PATH, 'image.jpg')
+
+    assert 'Valid zip-archive expected' in str(excinfo.value)
+
+
+def test_directory_asset_write_zip_from_stream():
+    from werkzeug.datastructures import FileStorage
+    with app.app_context():
+        d = model(id=4)
+        with open(os.path.join(DIR_PATH, 'image.jpg.zip'), 'rb') as stream:
+            d.directory = FileStorage(stream, 'image.jpg.zip')
+        assert (os.path.isdir(instance.directory.abs_path))
+        assert (os.path.isfile(os.path.join(instance.directory.abs_path, 'image.jpg')))

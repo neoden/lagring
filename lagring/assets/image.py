@@ -167,7 +167,7 @@ class ImageAsset(Asset):
             ext = '.' + ext
         return os.path.join(gettempdir() if dir is None else dir, str(uuid4()) + ext)
 
-    def upload(self, storage, src, meta):
+    def upload(self, storage, src, meta=None):
         original_size = self._get_image_size(src.stream)
 
         if self.constraint_type == 'min':
