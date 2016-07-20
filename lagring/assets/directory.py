@@ -9,6 +9,10 @@ from lagring import Asset, StorageException
 
 
 class DirectoryAsset(Asset):
+    """
+    Asset type to store directory assets. Source can be a directory or zip archive which
+    is unpacked upon upload to the storage.
+    """
     def _get_temp_path(self):
         return os.path.join(gettempdir(), str(uuid4()))
 
