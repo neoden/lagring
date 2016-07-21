@@ -153,6 +153,7 @@ def test_image_asset_def():
         id = db.Column(db.Integer(), primary_key=True)
 
         image = ImageAsset(size=(100, 100))
+        image_no_process = ImageAsset()
 
     global model
     model = D
@@ -166,6 +167,12 @@ def test_image_asset():
 
         global instance
         instance = a
+
+
+def test_image_no_process():
+    with app.app_context():
+        instance.image_no_process = IMAGE_PATH
+        assert(os.path.isfile(instance.image_no_process.abs_path))
 
 
 def test_image_asset_write():

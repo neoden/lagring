@@ -182,9 +182,13 @@ class ImageAsset(Asset):
         
         if not any([self.size, self.width, self.height]):
             # без обработки
-            new_path = src.path
+            new_path = self._get_temp_path()
             if meta is None:
                 meta = self._size_to_dict(original_size)
+            img = Image.open(src.stream)
+            new_format = 'JPEG' if img.format == 'JPEG' else 'PNG'
+            img.save(new_path, new_format)
+            extension = new_format.lower()
         else:
             target_size = self._target_size(original_size)
             temp = self._get_temp_path()
