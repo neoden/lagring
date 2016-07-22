@@ -6,7 +6,7 @@ import shutil
 import uuid
 
 from .classproperty import classproperty
-from .exception import StorageException
+from .exceptions import StorageException
 from .logger import log
 
 

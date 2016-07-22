@@ -1,4 +1,4 @@
-from .exception import StorageException
+from .exceptions import StorageException
 
 
 class AssetInstance:

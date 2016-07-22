@@ -88,7 +88,7 @@ If you want to use `ImageAsset` class you have to install Pillow as well.
         - 'max' - maximum size is set
         - 'exact' - exact target size is set
         
-        If the size constraint is not met, the `AssetRequirementsException` will be thrown.
+        If the size constraint is not met then `AssetRequirementsException` will be thrown.
         Process method set in _transform_ parameter will be also taken into account.
     - **size_constraint** - size constraint value
     - **lazy_init** - specify callable to return asset parameters. Typical usecase —
@@ -103,14 +103,14 @@ If you want to use `ImageAsset` class you have to install Pillow as well.
     
 ## Exceptions
 
-- **StorageException**
+- lagring.exceptions.**StorageException**
 
     General purpose "something gone wrong with the storage" error. 
     
-- **AssetRequirementsException**
+- lagring.exceptions.**AssetRequirementsException**
  
     Data being uploaded does not meet requirements configured for asset field.
      
-- **AssetProcessingException**
+- lagring.exceptions.**AssetProcessingException**
 
     Error while processing asset data.

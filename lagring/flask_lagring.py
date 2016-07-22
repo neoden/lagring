@@ -5,7 +5,7 @@ from werkzeug.datastructures import FileStorage
 from .core import LagringCore, _AssetSource
 from .entity import Entity
 from .classproperty import classproperty
-from .exception import StorageException
+from .exceptions import StorageException
 
 
 class _AssetSourceEx(_AssetSource):

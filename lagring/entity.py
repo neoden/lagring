@@ -4,7 +4,7 @@ from sqlalchemy.orm.attributes import flag_modified
 from sqlalchemy import Column
 
 from .classproperty import classproperty
-from .exception import StorageException
+from .exceptions import StorageException
 from .asset import Asset
 
 
@@ -86,7 +86,7 @@ class Entity:
 
     def iterassets(self):
         """
-        Iterate of entity instance assets
+        Iterate entity instance assets
         """
         return ((getattr(self, name), name) for asset, name in self._asset_names.items())
 
