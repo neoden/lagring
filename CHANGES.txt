@@ -1,3 +1,5 @@
+0.2.3 - Just a little more meaningful README
+0.2.2 - Fixed from lagring.assets import DirectoryAsset didn't work
 0.2.1 - Fixed ImageAsset behaviour when no processing is applied on upload
 0.2.0 - Added DirectoryAsset
 0.1.0 - Initial public issue
