@@ -7,6 +7,11 @@
 - Flask
 - PostgreSQL 9.4+
 
+## Installation
+
+    pip install lagring
+
+    If you want to use `ImageAsset` class you have to install Pillow as well.
 
 ## How to use it:
 
