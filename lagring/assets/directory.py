@@ -5,7 +5,7 @@ from tempfile import gettempdir
 from uuid import uuid4
 
 
-from lagring import Asset, StorageException
+from lagring import Asset, StorageException, AssetProcessingException
 
 
 class DirectoryAsset(Asset):
@@ -28,7 +28,7 @@ class DirectoryAsset(Asset):
                 temp_src = storage.asset_source_adapter(temp_dir)
                 return temp_src, meta, cleanup
         else:
-            raise StorageException('Valid zip-archive expected')
+            raise AssetProcessingException('Valid zip-archive expected')
 
     def upload(self, storage, src, meta=None):
         if src.type == 'directory':
@@ -47,4 +47,4 @@ class DirectoryAsset(Asset):
 
             return new_src, meta, cleanup2
         else:
-            raise StorageException('Unknown source type')
+            raise AssetProcessingException('Unknown source type')
