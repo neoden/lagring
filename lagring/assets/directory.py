@@ -47,4 +47,4 @@ class DirectoryAsset(Asset):
 
             return new_src, meta, cleanup2
         else:
-            raise AssetProcessingException('Unknown source type')
+            raise StorageException('Unknown source type')
