@@ -1,7 +1,7 @@
 # Lagring: asset storage for Flask
 
 
-## Requirements:
+## Requirements
 
 - SQLAlchemy
 - Flask
@@ -13,7 +13,7 @@
 
 If you want to use `ImageAsset` class you have to install Pillow as well.
 
-## How to use it:
+## How to use it
 
 0. Configure your Flask app to have necessary config options:
 
@@ -41,7 +41,7 @@ If you want to use `ImageAsset` class you have to install Pillow as well.
             file = Asset()
     ```
 
-    Note that the JSONB field `_assets` will be added to the model (PostgreSQL 9.4+).
+    Note that JSONB field `_assets` will be added to the model (PostgreSQL 9.4+).
     You can change the name by overriding `lagring.Entity.asset_data_field` method.
 
 3. Put something to that asset field:

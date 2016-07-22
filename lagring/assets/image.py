@@ -4,7 +4,7 @@ from uuid import uuid4
 
 from PIL import Image
 
-from lagring import Asset, StorageException
+from lagring import Asset, StorageException, AssetRequirementsException, AssetProcessingException
 from lagring.logger import log
 
 
@@ -69,7 +69,7 @@ class ImageAsset(Asset):
             self.constraint_type = constraint_type
         else:
             if size_constraint:
-                raise StorageException('Size constraint is set but no constraint type is specified')
+                raise AssetRequirementsException('Size constraint is set but no constraint type is specified')
 
         self.init_lazy = None
 
@@ -98,8 +98,11 @@ class ImageAsset(Asset):
 
     @staticmethod
     def _get_image_size(src):
-        img = Image.open(src)
-        return img.size
+        try:
+            img = Image.open(src)
+            return img.size
+        except OSError:
+            raise AssetProcessingException('Failed to open image')
 
     @staticmethod
     def _size_to_dict(size):
@@ -141,7 +144,11 @@ class ImageAsset(Asset):
         :param mode: crop - rezise and crop, fit - fit to size
         :return: modified image
         """
-        img = Image.open(src)
+        try:
+            img = Image.open(src)
+        except OSError:
+            raise AssetProcessingException('Failed to open image')
+
         format = img.format
         res_img = self._downsize_img(img, size, mode=mode)
 
@@ -157,7 +164,10 @@ class ImageAsset(Asset):
         else:
             new_path = dest + '.' + extension
 
-        res_img.save(new_path, new_format)
+        try:
+            res_img.save(new_path, new_format)
+        except OSError:
+            raise AssetProcessingException('Failed to save temporary image')
 
         return new_path, extension
 
@@ -185,9 +195,19 @@ class ImageAsset(Asset):
             new_path = self._get_temp_path()
             if meta is None:
                 meta = self._size_to_dict(original_size)
-            img = Image.open(src.stream)
+
+            try:
+                img = Image.open(src.stream)
+            except OSError:
+                raise AssetProcessingException('Failed to open image')
+
             new_format = 'JPEG' if img.format == 'JPEG' else 'PNG'
-            img.save(new_path, new_format)
+
+            try:
+                img.save(new_path, new_format)
+            except OSError:
+                raise AssetProcessingException('Failed to save temporary image')
+
             extension = new_format.lower()
         else:
             target_size = self._target_size(original_size)
