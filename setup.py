@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="Lagring",
-    version="0.2.7",
+    version="0.2.7.1",
     author="Lenar Imamutdinov",
     author_email="lenar.imamutdinov@gmail.com",
     packages=find_packages(),
@@ -10,7 +10,7 @@ setup(
     url="https://github.com/neoden/lagring",
     license="MIT",
     description="Asset storage for Flask",
-    long_description=open("README").read(),
+    long_description=open("README.md").read(),
     install_requires=[
         "flask",
         "sqlalchemy"
