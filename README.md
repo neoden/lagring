@@ -9,11 +9,9 @@
 
 ## Installation
 
-    ```
     pip install lagring
-    ```
 
-    If you want to use `ImageAsset` class you have to install Pillow as well.
+If you want to use `ImageAsset` class you have to install Pillow as well.
 
 ## How to use it:
 
