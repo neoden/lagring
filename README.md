@@ -68,6 +68,49 @@ If you want to use `ImageAsset` class you have to install Pillow as well.
         del new_file.file
     ```
 
-5. Besides the basic `Asset` class, there are also `ImageAsset` and `DirectoryAsset` to store
-something more specific and have some processing on upload (no docs for that yet, please see
-the code).
+## More asset classes
+
+- lagring.assets.**ImageAsset**(_size_=None, _width_=None, _height_=None, _transform_='crop', _constraint_type_='none', _size_constraint_=None, _init_lazy_=None)
+
+    Image asset is always converted to PNG unless it is JPEG. 
+    
+    - **size** - target size
+    - **width** - target width
+    - **height** - target height
+    
+        If asset size is set only by width or height then target size is calculated using image aspect ratio.
+    - **transform** - process method
+        - 'crop' - resize and crop to size
+        - 'fit' - fit to size, preserving the original aspect ratio
+    - **constraint_type** - size constraint type:
+        - 'none' - no constraint
+        - 'min' - minimum size is set
+        - 'max' - maximum size is set
+        - 'exact' - exact target size is set
+        
+        If the size constraint is not met, the `AssetRequirementsException` will be thrown.
+        Process method set in _transform_ parameter will be also taken into account.
+    - **size_constraint** - size constraint value
+    - **lazy_init** - specify callable to return asset parameters. Typical usecase —
+        setup asset using parameters specified in the application config. Asset
+        will be initialized on first access.
+    
+    
+- lagring.assets.**DirectoryAsset**()
+
+    Asset type to store directory assets. Source can be a directory or zip archive which is unpacked upon upload to the storage.
+    
+    
+## Exceptions
+
+- **StorageException**
+
+    General purpose "something gone wrong with the storage" error. 
+    
+- **AssetRequirementsException**
+ 
+    Data being uploaded does not meet requirements configured for asset field.
+     
+- **AssetProcessingException**
+
+    Error while processing asset data.
