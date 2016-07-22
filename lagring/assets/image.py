@@ -69,7 +69,7 @@ class ImageAsset(Asset):
             self.constraint_type = constraint_type
         else:
             if size_constraint:
-                raise AssetRequirementsException('Size constraint is set but no constraint type is specified')
+                raise StorageException('Size constraint is set but no constraint type is specified')
 
         self.init_lazy = None
 
@@ -182,13 +182,13 @@ class ImageAsset(Asset):
 
         if self.constraint_type == 'min':
             if original_size[0] < self.size_constraint[0] or original_size[1] < self.size_constraint[1]:
-                raise StorageException('Size is less than minimum constraint')
+                raise AssetRequirementsException('Size is less than minimum constraint')
         elif self.constraint_type == 'max':
             if original_size[0] > self.size_constraint[0] or original_size[1] > self.size_constraint[1]:
-                raise StorageException('Size is bigger than maxmimum constraint')
+                raise AssetRequirementsException('Size is bigger than maxmimum constraint')
         elif self.constraint_type == 'exact':
             if original_size[0] != self.size_constraint[0] and original_size[1] != self.size_constraint[1]:
-                raise StorageException('Exact size constraint is not met')
+                raise AssetRequirementsException('Exact size constraint is not met')
         
         if not any([self.size, self.width, self.height]):
             # без обработки

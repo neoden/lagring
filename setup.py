@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="Lagring",
-    version="0.2.6.2",
+    version="0.2.7",
     author="Lenar Imamutdinov",
     author_email="lenar.imamutdinov@gmail.com",
     packages=find_packages(),

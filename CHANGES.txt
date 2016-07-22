@@ -1,3 +1,4 @@
+0.2.7 - Exceptions fixed
 0.2.5 - Exceptions fixed in DirectoryAsset
 0.2.4 - More specific exceptions
 0.2.3 - Just a little more meaningful README
