@@ -31,8 +31,10 @@ class _AssetSourceEx(_AssetSource):
 
 
 class FlaskLagring(LagringCore):
-    def __init__(self):
-        pass
+    def __init__(self, app=None):
+        self.app = app
+        if app:
+            self.init_app(app)
 
     def init_app(self, app):
         root = app.config['ASSET_STORAGE_ROOT']
