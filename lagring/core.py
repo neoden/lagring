@@ -49,7 +49,7 @@ class _AssetSource:
             if os.path.isfile(self.src):
                 return open(self.src, 'rb')
             else:
-                raise StorageException("File {} not found".format(self.src))
+                raise StorageException("File '{}' not found".format(self.src))
         elif isinstance(self.src, io.IOBase):
             return self.src
         else:
