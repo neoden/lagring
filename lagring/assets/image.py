@@ -19,6 +19,9 @@ class ImageAsset(Asset):
     height - target height
         If asset size is set only by width or height,
         target size is calculated using image aspect ratio.
+    quality - quality saved image
+    optimize - optimize image or not
+    progressive - save image in progressive format
     transform - process method
         'crop' - resize and crop to size
         'fit' - fit to size, preserving the original aspect ratio
@@ -41,13 +44,17 @@ class ImageAsset(Asset):
             self._init(**kwargs)
 
     def _init(self, size=None, width=None, height=None,
-              transform='crop', size_constraint=None, constraint_type='none'):
+              transform='crop', size_constraint=None, constraint_type='none',
+              quality=100, optimize=True, progressive=True):
         if transform not in ('crop', 'fit'):
             raise ValueError('Unknown transformation type')
 
         self.size = size
         self.width = width
         self.height = height
+        self.quality = quality
+        self.optimize = optimize
+        self.progressive = progressive
 
         if size:
             if height or width:
@@ -165,7 +172,7 @@ class ImageAsset(Asset):
             new_path = dest + '.' + extension
 
         try:
-            res_img.save(new_path, new_format)
+            res_img.save(new_path, new_format, quality=self.quality, optimize=self.optimize, progressive=self.progressive)
         except OSError:
             raise AssetProcessingException('Failed to save temporary image')
 
@@ -204,7 +211,7 @@ class ImageAsset(Asset):
             new_format = 'JPEG' if img.format == 'JPEG' else 'PNG'
 
             try:
-                img.save(new_path, new_format)
+                img.save(new_path, new_format, quality=self.quality, optimize=self.optimize, progressive=self.progressive)
             except OSError:
                 raise AssetProcessingException('Failed to save temporary image')
 
