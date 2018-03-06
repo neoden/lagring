@@ -37,6 +37,10 @@ class ImageAsset(Asset):
         setup asset using parameters specified in the application config. Asset
         will be initialized on first access.
     """
+
+    IMAGE_FORMATS = ['PNG', 'JPEG']
+    DEFAULT_FORMAT = 'PNG'
+
     def __init__(self, init_lazy=None, **kwargs):
         if init_lazy:
             self.init_lazy = init_lazy
@@ -193,7 +197,7 @@ class ImageAsset(Asset):
         except OSError:
             raise AssetProcessingException('Failed to open image')
 
-        if img.format in self.IMAGE_FORMAT:
+        if img.format in self.IMAGE_FORMATS:
             force_format = None
         else:
             force_format = self.DEFAULT_FORMAT
